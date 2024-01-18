@@ -57,61 +57,58 @@ const Login:React.FC <LoginProps>= ({ navigation }) => {
 
 export default Login
 const styles = StyleSheet.create({
-    mainView:{
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center",
-        marginTop:40
-        
-    },
-    input:{
-        borderColor:"rgb(92, 110, 248)",
-        height: 40,
-        borderWidth: 1,
-        padding: 10,
-        marginTop:5,
-        marginBottom:20,
-        fontWeight:"bold"
-
-    },
-    inputView:{
-        width:"80%",
-  
-    },
-    title:{
-        textAlign:"left",
-        width:"80%",
-        height:50
-        
-    
-    },
-    titleText:{
-        color:"rgb(92, 110, 248)",
-        fontSize:20,
-        fontWeight:"bold"
+    mainView: {
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 40,
+      },
       
-    },
-    btnContainer:{
-        width:"80%",
-        alignItems:"center",
-        justifyContent:"center",
-        
-    },
-    btnStyle:{
-        width:"100%",
-        padding: 12, 
-        backgroundColor:"rgb(92, 110, 248)",
-        shadowColor:"rgb(92, 110, 248)",
-        borderRadius:10,
-        marginBottom:10,
-        marginTop:10,
-        
-        
-    },
-    btnText:{
-        color:"white",
-        fontWeight:"bold",
-        textAlign:"center"
-    }
-
+      input: {
+        borderColor: "rgb(92, 110, 248)",
+        borderWidth: 1,
+        fontWeight: "bold",
+        height: 40,
+        marginBottom: 20,
+        marginTop: 5,
+        padding: 10,
+      },
+      
+      inputView: {
+        width: "80%",
+      },
+      
+      title: {
+        height: 50,
+        textAlign: "left",
+        width: "80%",
+      },
+      
+      titleText: {
+        color: "rgb(92, 110, 248)",
+        fontSize: 20,
+        fontWeight: "bold",
+      },
+      
+      btnContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: "80%",
+      },
+      
+      btnStyle: {
+        backgroundColor: "rgb(92, 110, 248)",
+        borderRadius: 10,
+        marginBottom: 10,
+        marginTop: 10,
+        padding: 12,
+        shadowColor: "rgb(92, 110, 248)",
+        width: "100%",
+      },
+      
+      btnText: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+      }
 })
