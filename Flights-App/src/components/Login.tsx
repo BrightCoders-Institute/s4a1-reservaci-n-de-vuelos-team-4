@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
-import {View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native'
+import { useState } from 'react'
+import * as React from "react"
+import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -10,7 +11,7 @@ type LoginProps = {
   navigation: LoginNavigationProp;
 };
 
-const Login:React.FC <LoginProps>= () => {
+const Login:React.FC <LoginProps> = () => {
     const [user,setUser] = React.useState('')
     const [password,setPassword] = React.useState('')
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
@@ -23,11 +24,11 @@ const Login:React.FC <LoginProps>= () => {
             console.log("userData", user,password)
             //navigation.navogate("home")
             if(user.trim() === '' || password.trim() === '' ){
-             alert("Todos los campos son obligatorios");
+             Alert.alert("Todos los campos son obligatorios");
              setBorderColor('red')
             } else {
               // navigation.navigate('Home',{user:email})
-              alert("Datos correctos")
+              Alert.alert("Datos correctos")
             }
             
         }
@@ -45,27 +46,27 @@ const Login:React.FC <LoginProps>= () => {
             <Text style={styles.titleText}>Login</Text>
             </View>
      
-      <View style={styles.inputView}>
+        <View style={styles.inputView}>
             <Text>Email*</Text>
-          <TextInput onChangeText={handleEmailChange} style={[styles.input,{borderColor:borderColor}]} ></TextInput>
+            <TextInput onChangeText={handleEmailChange} style={[styles.input,{borderColor:borderColor}]} ></TextInput>
 
-          <Text>Password*</Text>
-          <TextInput  onChangeText={handlePasswordChange} style={[styles.input,{borderColor:borderColor}]} secureTextEntry></TextInput>
-      </View>
+            <Text>Password*</Text>
+            <TextInput onChangeText={handlePasswordChange} style={[styles.input,{borderColor:borderColor}]} secureTextEntry></TextInput>
+        </View>
 
 
-      <View style={styles.btnContainer}>
-     <TouchableOpacity style = {styles.btnStyle} onPress={handleSubmit}>
-        <Text style={styles.btnText}>Log in</Text>
-     </TouchableOpacity>
+        <View style={styles.btnContainer}>
+            <TouchableOpacity style = {styles.btnStyle} onPress={handleSubmit}>
+                <Text style={styles.btnText}>Log in</Text>
+            </TouchableOpacity>
 
-     <Text>or</Text>
+            <Text>or</Text>
 
-     <TouchableOpacity style = {styles.btnStyle}>
-        <Text style={styles.btnText}>Log in with google</Text>
-     </TouchableOpacity>
-      </View>
-      <Text onPress={()=>navigation.navigate("Register")}> Don't have an account?</Text>
+            <TouchableOpacity style = {styles.btnStyle}>
+                <Text style={styles.btnText}>Log in with google</Text>
+            </TouchableOpacity>
+        </View>
+        <Text onPress={()=>navigation.navigate("Register")}> Don't have an account?</Text>
       
     </View>
     </SafeAreaView>
