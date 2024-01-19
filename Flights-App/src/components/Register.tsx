@@ -1,8 +1,11 @@
-import React, {useState} from "react";
-import { View,Text,TextInput,SafeAreaView,StyleSheet, Button } from "react-native";
+import React from "react";
+import { useState } from 'react';
+import { View,Text,TextInput,SafeAreaView,StyleSheet, Button, TouchableOpacity,} from "react-native";
+import Checkbox from 'expo-checkbox';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../rutes/RootStackParamList';
-import { TouchableOpacity } from "react-native-gesture-handler";
+
+
 
 
 type RegisterNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>
@@ -11,13 +14,25 @@ type RegisterProps = {
 }
 
 const Register:React.FC<RegisterProps> = ({ navigation }) => {
-    const [user,setUser] = React.useState('')
+    const [user,setUser] = useState('')
     const [password,setPassword] = React.useState('')
     const [email,setEmail] = React.useState('')
-
+    const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
+    
     const handleRegister = () => {
-        console.log("Datos registrados:", user, password, email)
+        console.log("Datos registrados:", user, password, email); 
+         if(user.trim() === '' || password.trim() === '' || email === '' ){
+             alert("Todos los campos son obligatorios");
+             setBorderColor('red')
+            } else {
+              // navigation.navigate('Home')
+              alert("Datos correctos")
+            }
+        
     }
+
+    const [isCheckedAT, setCheckedAT] = useState(false);
+    const [isCheckedSU, setCheckedSU] = useState(false);
 
     return (
 
@@ -35,23 +50,50 @@ const Register:React.FC<RegisterProps> = ({ navigation }) => {
                 <TextInput placeholder="useless placeholder" onChangeText={setPassword} style={styles.input} secureTextEntry></TextInput>
                 <Text style={styles.titlepass} >Use 8 or more characters whith a mix of letters, numbers and symbols.</Text>
 
-                <View> 
+                    <View style={styles.section}>
+                        <Checkbox style={styles.checkbox} value={isCheckedAT} onValueChange={setCheckedAT} color={isCheckedAT ? '#5C6EF8' : undefined}/>
+                        <Text style={styles.checkboxText}>I agree to the Terms and Privacy Policy</Text>
+                    </View>
+                    
+                    <View style={styles.section}>
+                        <Checkbox style={styles.checkbox} value={isCheckedSU} onValueChange={setCheckedSU} color={isCheckedSU ? '#5C6EF8' : undefined}/>
+                        <Text style={styles.checkboxText}>Subscribe for select product update</Text>
+                    </View>
+
                     <TouchableOpacity onPress={handleRegister} style = {styles.btnStyle}>
-                        <Text style={styles.btnText}>Sing Up with google</Text>
+                        <Text style={styles.btnText}>Sing Up</Text>
                     </TouchableOpacity>
-                    <Text style={styles.titleoror}>or</Text>
-                    <Button title="Sign Up whith Google" onPress={handleRegister}/>
+                    <Text style={styles.titleor}>or</Text>
+                    <TouchableOpacity onPress={handleRegister} style = {styles.btnStyle}>
+                        <Text style={styles.btnText}>Sing Up with Google</Text>
+                    </TouchableOpacity>
                 </View>
+                <Text onPress={() => navigation.navigate('Login')}>
+                    Aready have an account? Click here to login!
+                </Text>
             </View>
-            <Text onPress={() => navigation.navigate('Login')}>
-                Aready have an account? Click here to login!
-            </Text>
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
     );
     
 }
     const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            marginHorizontal: 16,
+            marginVertical: 32,
+        },
+        section: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        checkboxText: {
+            color: "#b7babf",
+            fontSize: 13,
+            fontWeight: "bold",
+        },
+        checkbox: {
+            margin: 8,
+        },
         btnStyle: {
             backgroundColor: "rgb(92, 110, 248)",
             borderRadius: 10,
@@ -94,12 +136,13 @@ const Register:React.FC<RegisterProps> = ({ navigation }) => {
             fontSize: 20,
             fontWeight: "bold",
         },
-        titleoror: {
+        titleor: {
             fontSize: 15,
             fontWeight: "bold",
             textAlign: "center",
         },
         titlepass: {
+            color: "#b7babf",
             fontSize: 12,
             fontWeight: "bold",
         },
