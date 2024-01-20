@@ -2,9 +2,11 @@ import { useState } from 'react'
 import * as React from "react"
 import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../rutes/RootStackParamList';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../firebaseConfig";
 
 type LoginNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 type LoginProps = {
@@ -17,28 +19,48 @@ const Login:React.FC <LoginProps> = () => {
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
     const navigation = useNavigation()
 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        const handleSubmit = () => {
-            //fetch
-            
-            console.log("userData", user,password)
-            //navigation.navogate("home")
-            if(user.trim() === '' || password.trim() === '' ){
-             Alert.alert("Todos los campos son obligatorios");
-             setBorderColor('red')
+    const handleUserFirebase = () => {
+        signInWithEmailAndPassword(auth, user, password)
+        .then((userCredential) => {
+            // Signed in 
+            console.log("User login!")
+            const user = userCredential.user;
+            console.log("user", user)
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if(errorMessage == 'auth/user-not-found'){
+              Alert.alert("Este usuario no esta registrado")
             } else {
-              // navigation.navigate('Home',{user:email})
-              Alert.alert("Datos correctos")
+              console.log("error", errorCode, errorMessage)
             }
             
-        }
+            Alert.alert(errorMessage)
+            // ..
+        });
+    }
 
-    const handleEmailChange = (email:String) =>{
-        setUser(email)
+    const handleSubmit = () => {
+        //fetch
+        
+       
+        //navigation.navogate("home")
+        if(user.trim() === '' || password.trim() === '' ){
+          Alert.alert("Todos los campos son obligatorios");
+          setBorderColor('red')
+        } else {
+          handleUserFirebase()
+          
+        }
+        
     }
-    const handlePasswordChange = (psw:String) =>{
-        setPassword(psw)
-    }
+    
+   
    return (
     <SafeAreaView>
         <View style={styles.mainView}>
@@ -48,10 +70,10 @@ const Login:React.FC <LoginProps> = () => {
      
         <View style={styles.inputView}>
             <Text>Email*</Text>
-            <TextInput onChangeText={handleEmailChange} style={[styles.input,{borderColor:borderColor}]} ></TextInput>
+            <TextInput onChangeText={setUser} style={[styles.input,{borderColor:borderColor}]} ></TextInput>
 
             <Text>Password*</Text>
-            <TextInput onChangeText={handlePasswordChange} style={[styles.input,{borderColor:borderColor}]} secureTextEntry></TextInput>
+            <TextInput onChangeText={setPassword} style={[styles.input,{borderColor:borderColor}]} secureTextEntry></TextInput>
         </View>
 
 
