@@ -4,6 +4,9 @@ import { View,Text,TextInput,SafeAreaView,StyleSheet, Button, TouchableOpacity,A
 import Checkbox from 'expo-checkbox';
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../rutes/RootStackParamList';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../firebaseConfig";
 
 
 type RegisterNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>
@@ -11,28 +14,55 @@ type RegisterProps = {
     navigation: RegisterNavigationProp;
 }
 
+
 const Register:React.FC<RegisterProps> = ({ navigation }) => {
     const [user,setUser] = useState('')
     const [password,setPassword] = React.useState('')
     const [email,setEmail] = React.useState('')
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
     
-    const handleRegister = () => {
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const handleUserFirebase = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            console.log("User created!")
+            const user = userCredential.user;
+            console.log("user", user)
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if(errorMessage == 'auth/email-already-exists'){
+                Alert.alert("Este email ya esta registrado")
+            } else 
+            {
+                Alert.alert(errorMessage)
+            }
+           
+            console.log("error", errorCode, errorMessage)
+            // ..
+        });
+    }
+
+    const handleSubmit = () => {
         console.log("Datos registrados:", user, password, email); 
          if(user.trim() === '' || password.trim() === '' || email === '' ){
                 Alert.alert("Todos los campos son obligatorios");
                 setBorderColor('red')
             } else {
                 // navigation.navigate('Home')
+                handleUserFirebase()
                 Alert.alert("Datos correctos")
             }
     }
 
-    const handleEmailChange = (email:String) => {
-        setUser(email)
-    }
-    const handlePasswordChange = (psw:String) =>{
-        setPassword(psw)
+    const handleSubmitgGoogle = () => {
+        console.log("Aun no esta disponible")
     }
 
     const [isCheckedAT, setCheckedAT] = useState(false);
@@ -48,11 +78,11 @@ const Register:React.FC<RegisterProps> = ({ navigation }) => {
                     <TextInput onChangeText={setUser} style={styles.input}></TextInput>
 
                     <Text>Email*</Text>
-                    <TextInput onChangeText={handleEmailChange} style={[styles.input,{borderColor:borderColor}]}></TextInput>
+                    <TextInput onChangeText={setEmail} style={[styles.input,{borderColor:borderColor}]}></TextInput>
                     
                     <View>
                         <Text>Password*</Text>
-                        <TextInput onChangeText={handlePasswordChange} style={[styles.inputpas,{borderColor:borderColor}]} secureTextEntry></TextInput>
+                        <TextInput onChangeText={setPassword} style={[styles.inputpas,{borderColor:borderColor}]} secureTextEntry></TextInput>
                         <Text style={styles.titlepass} >Use 8 or more characters whith a mix of letters, numbers and symbols.</Text>
                     </View>
                 </View>
@@ -70,11 +100,11 @@ const Register:React.FC<RegisterProps> = ({ navigation }) => {
                 </View>
                 
                 <View style={styles.btnView}>
-                    <TouchableOpacity onPress={handleRegister} style = {styles.btnStyle}>
+                    <TouchableOpacity onPress={handleSubmit} style = {styles.btnStyle}>
                         <Text style={styles.btnText}>Sing Up</Text>
                     </TouchableOpacity>
                     <Text style={styles.titleor}>or</Text>
-                    <TouchableOpacity onPress={handleRegister} style = {styles.btnStyle}>
+                    <TouchableOpacity onPress={handleSubmitgGoogle} style = {styles.btnStyle}>
                         <Text style={styles.btnText}>Sing Up with Google</Text>
                     </TouchableOpacity>
                 </View>
@@ -92,8 +122,9 @@ const Register:React.FC<RegisterProps> = ({ navigation }) => {
             width: "80%"
         },
         CheckBoxSection: {
-            flexDirection: 'row',
             alignItems: 'center',
+            flexDirection: 'row',
+           
         },
         checkboxText: {
             color: "#b7babf",
