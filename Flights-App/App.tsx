@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Register from './src/components/Register';
 import { RootStackParamList } from './src/rutes/RootStackParamList';
-import Navigation from './src/rutes/Navigation';
+import Navigation  from './src/rutes/Navigation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 export default function App():React.JSX.Element {
