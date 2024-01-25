@@ -60,25 +60,39 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             });
     }
 
-    const handleSubmitgGoogle = async () => {
-        WebBrowser.maybeCompleteAuthSession();
-        console.log("google")
+///////////////////////////////////////////
+    useEffect(() => {
+        GoogleSignin.configure({
+     
+            webClientId: '209290529552-i81ecag0gqp4mu8o3b2pi8r5u96bpdma.apps.googleusercontent.com',
+           
+          });
+      },[])
+    const handleSubmitgGoogle = async  () => {
+
+        console.log("log log")
         try{
-        promptAsync()
+            console.log("try")
+           await GoogleSignin.hasPlayServices()
+           const {idToken}  = await GoogleSignin.signIn()
+           console.log("token", idToken)
+           const googleCredential = GoogleAuthProvider.credential(idToken)
+           console.log(googleCredential)
+           await signInWithCredential(auth,googleCredential)
           
         }catch(err:any){
             console.log(err)
         }
     }
-
-    React.useEffect(() => {
-        console.log("response", response)
-        if (response?.type == 'success') {
-          const { id_token } = response.params;
-          const credential = GoogleAuthProvider.credential(id_token);
-          signInWithCredential(auth, credential)
+    const signOut = async () => {
+        try {
+          await GoogleSignin.signOut();
+         // setState({ user: null }); // Remember to remove the user from your app's state as well
+        } catch (error) {
+          console.error(error);
         }
-    }, [response])
+      };
+////////////////////////////////////////////
 
     const handleSubmit = () => {
         console.log("Datos registrados:", user, password, email);

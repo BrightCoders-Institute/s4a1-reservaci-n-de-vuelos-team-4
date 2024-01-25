@@ -7,7 +7,9 @@ import { RootStackParamList } from '../rutes/RootStackParamList';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebaseConfig";
+import { GoogleSignin, } from '@react-native-google-signin/google-signin';
 
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
 
 type LoginNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 type LoginProps = {
@@ -60,6 +62,23 @@ const Login:React.FC <LoginProps> = () => {
         }
         
     }
+
+    const handleSubmitgGoogle = async  () => {
+
+      console.log("log log")
+      try{
+          console.log("try")
+         await GoogleSignin.hasPlayServices()
+         const {idToken}  = await GoogleSignin.signIn()
+         console.log("token", idToken)
+         const googleCredential = GoogleAuthProvider.credential(idToken)
+         console.log(googleCredential)
+         await signInWithCredential(auth,googleCredential)
+        
+      }catch(err:any){
+          console.log(err)
+      }
+  }
     
    
    return (
@@ -85,7 +104,7 @@ const Login:React.FC <LoginProps> = () => {
 
             <Text>or</Text>
 
-            <TouchableOpacity style = {styles.btnStyle}>
+            <TouchableOpacity style = {styles.btnStyle} onPress={handleSubmitgGoogle}>
                 <Text style={styles.btnText}>Log in with google</Text>
             </TouchableOpacity>
         </View>
