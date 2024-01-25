@@ -7,7 +7,14 @@ import { RootStackParamList } from '../rutes/RootStackParamList';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebaseConfig";
-import { GoogleSignin,GoogleSigninButton,statusCodes } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
+import { auth } from '../../firebaseConfig.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 
 type RegisterNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>
@@ -16,36 +23,22 @@ type RegisterProps = {
 }
 
 
-
-
-
 const Register: React.FC<RegisterProps> = ({ navigation }) => {
     const [user, setUser] = useState('')
     const [password, setPassword] = React.useState('')
     const [email, setEmail] = React.useState('')
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
 
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        androidClientId: '885739237783-dv56mbfe0kdd2ltvji249qkkn4uhcrjc.apps.googleusercontent.com',
+        
+    });
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-   
-    useEffect(() =>{
-        GoogleSignin.configure({
-            webClientId: "885739237783-up13r45l3t663rpc22q7g5iq0un4rh9f.apps.googleusercontent.com", // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
-             scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-            // offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-            // hostedDomain: '', // specifies a hosted domain restriction
-            // forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-            // accountName: '', // [Android] specifies an account name on the device that should be used
-            // iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-            // googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
-            // openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
-            // profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-        });
-    },[])
-    
+    const authh = getAuth(app);
+
     const handleUserFirebase = () => {
-        createUserWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(authh, email, password)
             .then((userCredential) => {
                 // Signed in 
                 console.log("User created!")
@@ -68,24 +61,24 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     }
 
     const handleSubmitgGoogle = async () => {
+        WebBrowser.maybeCompleteAuthSession();
         console.log("google")
-        try {
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-           console.log(userInfo)
-          } catch (error:any) {
-            console.log("error",error)
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-              // user cancelled the login flow
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-              // operation (e.g. sign in) is in progress already
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-              // play services not available or outdated
-            } else {
-               console.log("some other error happened")
-            }
-          }
+        try{
+        promptAsync()
+          
+        }catch(err:any){
+            console.log(err)
+        }
     }
+
+    React.useEffect(() => {
+        console.log("response", response)
+        if (response?.type == 'success') {
+          const { id_token } = response.params;
+          const credential = GoogleAuthProvider.credential(id_token);
+          signInWithCredential(auth, credential)
+        }
+    }, [response])
 
     const handleSubmit = () => {
         console.log("Datos registrados:", user, password, email);
@@ -140,7 +133,8 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                         <Text style={styles.btnText}>Sing Up</Text>
                     </TouchableOpacity>
                     <Text style={styles.titleor}>or</Text>
-                    <TouchableOpacity onPress={handleSubmitgGoogle} style={styles.btnStyle}>
+
+                    <TouchableOpacity  style={styles.btnStyle} onPress={() => handleSubmitgGoogle()}>
                         <Text style={styles.btnText}>Sing Up with Google</Text>
                     </TouchableOpacity>
                 </View>
@@ -148,7 +142,9 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <Text onPress={() => navigation.navigate('Login')}>
                     Aready have an account? Click here to login!
                 </Text>
-               
+
+
+
             </View>
         </SafeAreaView>
     );
