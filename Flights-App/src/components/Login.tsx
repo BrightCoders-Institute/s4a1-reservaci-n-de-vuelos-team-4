@@ -8,6 +8,11 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebaseConfig";
 
+import { GoogleSignin, } from '@react-native-google-signin/google-signin';
+
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+
+
 type LoginNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 type LoginProps = {
   navigation: LoginNavigationProp;
@@ -59,6 +64,25 @@ const Login:React.FC <LoginProps> = () => {
         }
         
     }
+
+
+    const handleSubmitgGoogle = async  () => {
+
+      console.log("log log")
+      try{
+          console.log("try")
+         await GoogleSignin.hasPlayServices()
+         const {idToken}  = await GoogleSignin.signIn()
+         console.log("token", idToken)
+         const googleCredential = GoogleAuthProvider.credential(idToken)
+         console.log(googleCredential)
+         await signInWithCredential(auth,googleCredential)
+        
+      }catch(err:any){
+          console.log(err)
+      }
+  }
+
     
    
    return (
@@ -69,10 +93,12 @@ const Login:React.FC <LoginProps> = () => {
             </View>
      
         <View style={styles.inputView}>
-            <Text>Email*</Text>
+
+            <Text>Email *</Text>
             <TextInput onChangeText={setUser} style={[styles.input,{borderColor:borderColor}]} ></TextInput>
 
-            <Text>Password*</Text>
+            <Text>Password *</Text>
+
             <TextInput onChangeText={setPassword} style={[styles.input,{borderColor:borderColor}]} secureTextEntry></TextInput>
         </View>
 
@@ -84,7 +110,7 @@ const Login:React.FC <LoginProps> = () => {
 
             <Text>or</Text>
 
-            <TouchableOpacity style = {styles.btnStyle}>
+            <TouchableOpacity style = {styles.btnStyle} onPress={handleSubmitgGoogle}>
                 <Text style={styles.btnText}>Log in with google</Text>
             </TouchableOpacity>
         </View>
@@ -116,24 +142,27 @@ const styles = StyleSheet.create({
       
       inputView: {
         width: "80%",
+        marginTop: 13,
       },
       
       title: {
         height: 50,
-        textAlign: "left",
         width: "80%",
+        marginTop: 20,
       },
       
       titleText: {
         color: "rgb(92, 110, 248)",
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: "bold",
+        textAlign: "center",
       },
       
       btnContainer: {
         alignItems: "center",
         justifyContent: "center",
         width: "80%",
+        marginTop: 9, 
       },
       
       btnStyle: {

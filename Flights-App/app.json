@@ -1,5 +1,10 @@
 {
   "expo": {
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ],
     "name": "Flights-App",
     "slug": "Flights-App",
     "version": "1.0.0",
@@ -18,13 +23,20 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.FlightsApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "64f977a9-30c9-4ec5-ae2f-2cf831d7d110"
+      }
     }
   }
 }
