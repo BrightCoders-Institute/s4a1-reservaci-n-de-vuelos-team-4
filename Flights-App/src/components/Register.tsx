@@ -17,11 +17,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
+
 type RegisterNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>
 type RegisterProps = {
     navigation: RegisterNavigationProp;
 }
-
 
 const Register: React.FC<RegisterProps> = ({ navigation }) => {
     const [user, setUser] = useState('')
@@ -104,6 +104,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
             handleUserFirebase()
             Alert.alert("Datos correctos")
         }
+
     }
 
 
@@ -120,12 +121,14 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                     <Text>Fisrt Name *</Text>
                     <TextInput onChangeText={setUser} style={styles.input}></TextInput>
 
+
                     <Text>Email *</Text>
                     <TextInput onChangeText={setEmail} style={[styles.input, { borderColor: borderColor }]}></TextInput>
 
                     <View>
                         <Text>Password *</Text>
                         <TextInput onChangeText={setPassword} style={[styles.inputpas, { borderColor: borderColor }]} secureTextEntry></TextInput>
+
                         <Text style={styles.titlepass} >Use 8 or more characters whith a mix of letters, numbers and symbols.</Text>
                     </View>
                 </View>
@@ -143,12 +146,14 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 </View>
 
                 <View style={styles.btnView}>
+
                     <TouchableOpacity onPress={handleSubmit} style={styles.btnStyle}>
                         <Text style={styles.btnText}>Sing Up</Text>
                     </TouchableOpacity>
                     <Text style={styles.titleor}>or</Text>
 
                     <TouchableOpacity  style={styles.btnStyle} onPress={() => handleSubmitgGoogle()}>
+
                         <Text style={styles.btnText}>Sing Up with Google</Text>
                     </TouchableOpacity>
                 </View>
@@ -269,6 +274,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
 }
+
 )
 
 export default Register
