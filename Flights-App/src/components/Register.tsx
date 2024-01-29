@@ -161,13 +161,16 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <Text onPress={() => navigation.navigate('Login')}>
                     Aready have an account? Click here to login!
                 </Text>
+                <Text onPress={() => signOut}>
+                    log Out
+                </Text>
 
 
 
             </View>
         </SafeAreaView>
     );
-
+    
 }
 const styles = StyleSheet.create({
     textTitle: {

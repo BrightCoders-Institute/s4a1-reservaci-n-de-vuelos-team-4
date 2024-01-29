@@ -115,7 +115,13 @@ const Login:React.FC <LoginProps> = () => {
             </TouchableOpacity>
         </View>
         <Text onPress={()=>navigation.navigate("Register")}> Don't have an account?</Text>
-      
+        <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("Booking")}>
+                <Text style={styles.btnText}>Booking</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereAreYou")}>
+                <Text style={styles.btnText}>Where</Text>
+            </TouchableOpacity>
     </View>
     </SafeAreaView>
     

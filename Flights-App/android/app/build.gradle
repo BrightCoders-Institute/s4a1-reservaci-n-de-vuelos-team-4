@@ -1,7 +1,10 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 //apply plugin: 'com.google.gms.google-services' 
-
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+project.ext.vectoricons = [
+    iconFontNames: [ 'MaterialIcons.ttf' ] // Specify font files
+]
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
 /**
