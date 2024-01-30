@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../rutes/RootStackParamList';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
-const  WhereAreYou :React.FC=() => {
+import Booking from './Booking';
+const  WhereWillYouBeFlyingTo :React.FC=() => {
 
   const navigation = useNavigation()
     const [countries, setContries] = React.useState([])
@@ -33,11 +33,14 @@ const  WhereAreYou :React.FC=() => {
   
     return (
         <View style={styes.mainview}>
+            
             <View style={styes.icon}>
                 <Icon name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
+                <Booking/> 
             </View>
             <View style={styes.textview}>
-              <Text style={styes.textInfo}>Where are you now?</Text>
+                
+              <Text style={styes.textInfo}>Where will you be flying to?</Text>
             </View>
             <View style={styes.inputView}>
                 <TextInput style={styes.input} placeholder='Select location' onChangeText={(text: string) => handleFilter(text)}value={filter} />
@@ -75,7 +78,7 @@ const styes = StyleSheet.create({
       },
       textInfo:{
         fontWeight:"bold",
-        fontSize:50,
+        fontSize:48,
         justifyContent:"flex-start",
       },
       textview:{
@@ -101,4 +104,4 @@ const styes = StyleSheet.create({
         borderBottomWidth:1
       }
 })
-export default WhereAreYou
+export default WhereWillYouBeFlyingTo

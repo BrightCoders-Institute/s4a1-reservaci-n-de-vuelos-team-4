@@ -22,6 +22,11 @@ const Login:React.FC <LoginProps> = () => {
     const [user,setUser] = React.useState('')
     const [password,setPassword] = React.useState('')
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
+    const [errors,setErrors] = React.useState({
+      email:'',
+      password:''
+
+    })
     const navigation = useNavigation()
 
     const app = initializeApp(firebaseConfig);
@@ -51,16 +56,36 @@ const Login:React.FC <LoginProps> = () => {
     }
 
     const handleSubmit = () => {
-        //fetch
-        
-       
-        //navigation.navogate("home")
-        if(user.trim() === '' || password.trim() === '' ){
-          Alert.alert("Todos los campos son obligatorios");
-          setBorderColor('red')
-        } else {
-          handleUserFirebase()
+        if(user.trim() === '' && password.trim() === ''){
+          setErrors({
+            ...errors,
+            email:"El email no puede estar vacío",
+            password:"La contraseña no puede estar vacía"
+          })
           
+        }else if(user.trim() === ''){
+          setErrors({
+            ...errors,
+            email:"El correo no puede estar vacía"
+          })
+        
+        }
+        else if(password.trim() === ''){
+          setErrors({
+            ...errors,
+            password:"La contraseña no puede estar vacía"
+          })
+         
+
+      
+        }
+        else{
+          setErrors({
+            ...errors,
+            email:'',
+            password:''
+          })
+          handleUserFirebase()
         }
         
     }
@@ -96,10 +121,17 @@ const Login:React.FC <LoginProps> = () => {
 
             <Text>Email *</Text>
             <TextInput onChangeText={setUser} style={[styles.input,{borderColor:borderColor}]} ></TextInput>
-
+              {
+                errors.email && 
+                <Text style={{color:"red"}}>{errors.email}</Text>
+              }
             <Text>Password *</Text>
 
             <TextInput onChangeText={setPassword} style={[styles.input,{borderColor:borderColor}]} secureTextEntry></TextInput>
+            {
+                errors.password && 
+                <Text style={{color:"red"}}>{errors.password}</Text>
+              }
         </View>
 
 
@@ -121,6 +153,17 @@ const Login:React.FC <LoginProps> = () => {
 
             <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereAreYou")}>
                 <Text style={styles.btnText}>Where</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("SelectPassengers")}>
+                <Text style={styles.btnText}>Passagers</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("SelectDate")}>
+                <Text style={styles.btnText}>Select Date</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereWillYouBeFlyingTo")}>
+                <Text style={styles.btnText}>WhereWillYouBeFlyingTo</Text>
             </TouchableOpacity>
     </View>
     </SafeAreaView>

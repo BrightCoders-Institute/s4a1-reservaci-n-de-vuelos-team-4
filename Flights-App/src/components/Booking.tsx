@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, Text, SafeAreaView,StyleSheet,TextInput } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
 
 const Booking:React.FC = () => {
   return (
@@ -13,15 +15,15 @@ const Booking:React.FC = () => {
                  <View style={styles.lineHorizontal} />
                 </View>
 
+                <View>
+                    <Icon name='airplanemode-active'  size={30} color="#4867aa" style={{ transform: [{ rotate: '90deg' }] }}/>
+                </View>
+
                 <View style={styles.infoDestination}>
                  <Text style= {styles.textInfoDestination}> AMS </Text>
                  <Text style= {styles.textInfo2}> Netherlands </Text>
                  <View style={styles.lineHorizontal} />
                </View>
-
-            </View> 
-            <View style={styles.inputView}>
-                <TextInput style={styles.input} placeholder='Select location'/>
             </View>
                
         </View>
@@ -39,18 +41,22 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     infoFlight:{
-        marginTop: 50,
+        marginTop: 30,
         flexDirection: 'row',
         alignItems: 'center', 
         justifyContent: 'space-between',
     }, 
 
     infoStarting:{
+        marginBottom: 31,
+        marginLeft:12,
         flex: 1,
         alignItems: 'flex-start', // Alinear a la izquierda
     },
 
     infoDestination:{
+        marginBottom: 1,
+        marginRight:20,
         flex: 1,
         alignItems: 'flex-end', // Alinear a la derecha
     },
@@ -69,9 +75,9 @@ const styles = StyleSheet.create({
         color: 'gray', 
     },
     lineHorizontal:{
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'gray',
-        width: 160, 
+        borderBottomWidth: 0.4,
+        borderBottomColor: 'grey',
+        width: 190, 
     },
     input:{
         borderBottomColor:"gray",
