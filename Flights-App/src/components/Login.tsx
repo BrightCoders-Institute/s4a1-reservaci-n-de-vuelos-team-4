@@ -134,7 +134,7 @@ const Login:React.FC <LoginProps> = () => {
               }
         </View>
 
-
+        
         <View style={styles.btnContainer}>
             <TouchableOpacity style = {styles.btnStyle} onPress={handleSubmit}>
                 <Text style={styles.btnText}>Log in</Text>
@@ -146,7 +146,7 @@ const Login:React.FC <LoginProps> = () => {
                 <Text style={styles.btnText}>Log in with google</Text>
             </TouchableOpacity>
         </View>
-        <Text onPress={()=>navigation.navigate("Register")}> Don't have an account?</Text>
+        <Text onPress={()=>navigation.navigate("Register")}>    Don't have an account?</Text>
         <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("Booking")}>
                 <Text style={styles.btnText}>Booking</Text>
             </TouchableOpacity>

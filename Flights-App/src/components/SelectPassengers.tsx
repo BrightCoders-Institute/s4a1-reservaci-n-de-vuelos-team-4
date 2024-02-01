@@ -26,14 +26,15 @@ const SelectPassengers: React.FC = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Selecciona la cantidad de pasajeros</Text>
+            <Text style={styles.title}>How many passengers?</Text>
 
             
             <WheelPicker
             options={passengersOptions}
             selectedIndex={selectedPassengers}
             onChange={(passengers) => setSelectedPassengers(passengers)}
-            style={styles.wheelPicker}
+            itemStyle={styles.wheelPicker}
+            itemTextStyle={styles.wheelPickerText}
             />
 
             
@@ -52,12 +53,21 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     title: {
-      fontSize: 18,
+      fontSize: 30,
       marginBottom: 20,
+      fontWeight: 'bold',
+      textAlign: 'left',
     },
     wheelPicker: {
       width: 200,
       height: 150,
+      
+    },
+    wheelPickerText: {
+      fontSize: 40,
+      color: 'black',
+      textAlign: 'center',
+      fontWeight: 'bold',
     },
     button: {
       marginTop: 20,

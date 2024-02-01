@@ -38,10 +38,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         display: "flex",
         justifyContent: "center",
-        marginTop: 40,
+        
+       
     },
     infoFlight:{
-        marginTop: 30,
+       
         flexDirection: 'row',
         alignItems: 'center', 
         justifyContent: 'space-between',
@@ -63,11 +64,11 @@ const styles = StyleSheet.create({
     textInfo:{
         marginRight: '70%', 
         fontWeight:"bold", 
-        fontSize: 26,
+        fontSize: 25,
     }, 
     textInfoDestination:{
         fontWeight:"bold", 
-        fontSize: 26,
+        fontSize: 25,
     },
     textInfo2:{
         marginTop: 1,
