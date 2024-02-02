@@ -1,33 +1,42 @@
 import React from 'react'
-import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Alert, KeyboardAvoidingView,Modal } from 'react-native'
+import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity, Alert, KeyboardAvoidingView, Modal } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../rutes/RootStackParamList';
-import {useState} from "react"
+import { RootStackParamList, SelectDateNavigationProps, SelectDateProps } from '../rutes/RootStackParamList';
+import { useState } from "react"
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-
-const  SelectDate:React.FC=() => {
-  
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+import Booking from './Booking';
+interface SelectDate {
+    route: SelectDateProps;
+    navigation: SelectDateNavigationProps;
+}
+const SelectDate: React.FC<SelectDate> = ({ route }) => {
+    const from = route.params.from
+    const to = route.params.to
     const SelectDateee = () => {
         const [selected, setSelected] = useState('');
-      
+
         return (
-          <Calendar
-            onDayPress={day => {
-              setSelected(day.dateString);
-            }}
-            markedDates={{
-              [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
-            }}
-          />
+            <Calendar
+                onDayPress={day => {
+                    setSelected(day.dateString);
+                }}
+                markedDates={{
+                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                }}
+            />
         );
-      };
-      
+    };
+
     return (
         <SafeAreaView>
-            <View style={styles.mainView}>
-                <View style={styles.infoFlight}>
+            <View >
+                <View style={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
+                    <Booking from={from} to={to}></Booking>
+                </View>
+
+                {/* <View style={styles.infoFlight}>
     
                     <View style={styles.infoStarting}>
                      <Text style= {styles.textInfo}> BEG </Text>
@@ -44,78 +53,77 @@ const  SelectDate:React.FC=() => {
                      <Text style= {styles.textInfo2}> Netherlands </Text>
                      <View style={styles.lineHorizontal} />
                    </View>
-                </View>
-                
+                </View> */}
+
             </View>
-                <View>
+            {/* <View>
                     <Text>SelectDate</Text>
-                </View>
-                
+                </View> */}
+
         </SafeAreaView>
-      )
+    )
+}
+export default SelectDate
+
+const styles = StyleSheet.create({
+
+    mainView: {
+        flex: 1,
+        padding: 10,
+        marginLeft: 10
+
+
+    },
+    infoFlight: {
+
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+
+    infoStarting: {
+        marginBottom: 31,
+        marginLeft: 12,
+        flex: 1,
+        alignItems: 'flex-start', // Alinear a la izquierda
+    },
+
+    infoDestination: {
+        marginBottom: 1,
+        marginRight: 20,
+        flex: 1,
+        alignItems: 'flex-end', // Alinear a la derecha
+    },
+    textInfo: {
+        marginRight: '70%',
+        fontWeight: "bold",
+        fontSize: 25,
+    },
+    textInfoDestination: {
+        fontWeight: "bold",
+        fontSize: 25,
+    },
+    textInfo2: {
+        marginTop: 1,
+        marginLeft: 2,
+        color: 'gray',
+    },
+    lineHorizontal: {
+        borderBottomWidth: 0.4,
+        borderBottomColor: 'grey',
+        width: 190,
+    },
+    input: {
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+        borderTopWidth: 0,
+
+
+    },
+    inputView: {
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center",
+
     }
-    export default SelectDate
-    
-    const styles = StyleSheet.create({
-    
-        mainView:{
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-            
-           
-        },
-        infoFlight:{
-           
-            flexDirection: 'row',
-            alignItems: 'center', 
-            justifyContent: 'space-between',
-        }, 
-    
-        infoStarting:{
-            marginBottom: 31,
-            marginLeft:12,
-            flex: 1,
-            alignItems: 'flex-start', // Alinear a la izquierda
-        },
-    
-        infoDestination:{
-            marginBottom: 1,
-            marginRight:20,
-            flex: 1,
-            alignItems: 'flex-end', // Alinear a la derecha
-        },
-        textInfo:{
-            marginRight: '70%', 
-            fontWeight:"bold", 
-            fontSize: 25,
-        }, 
-        textInfoDestination:{
-            fontWeight:"bold", 
-            fontSize: 25,
-        },
-        textInfo2:{
-            marginTop: 1,
-            marginLeft: 2,
-            color: 'gray', 
-        },
-        lineHorizontal:{
-            borderBottomWidth: 0.4,
-            borderBottomColor: 'grey',
-            width: 190, 
-        },
-        input:{
-            borderBottomColor:"gray",
-            borderBottomWidth:1,
-            borderTopWidth:0,
-            
-           
-        },
-        inputView:{
-            alignItems: "center",
-            display: "flex",
-            justifyContent: "center",
-            
-        }
-        });
-    
+});

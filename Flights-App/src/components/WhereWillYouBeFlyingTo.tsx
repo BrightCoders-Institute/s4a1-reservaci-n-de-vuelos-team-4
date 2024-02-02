@@ -2,51 +2,39 @@ import React, { useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../rutes/RootStackParamList';
+import { RootStackParamList, WhereWillYouBeFlyingToNavigationProp, WhereWillYouBeFlyingToProp } from '../rutes/RootStackParamList';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Booking from './Booking';
-const  WhereWillYouBeFlyingTo :React.FC=() => {
 
+interface WhereWillYouBeFlyingTo{
+    route:WhereWillYouBeFlyingToProp;
+    navigation:WhereWillYouBeFlyingToNavigationProp;
+}
+const  WhereWillYouBeFlyingTo :React.FC<WhereWillYouBeFlyingTo>=({route}) => {
+  const location = route.params.from
   const navigation = useNavigation()
-    const [countries, setContries] = React.useState([])
-    const [filter,setFilter] = React.useState<string>('')
-
-    const getData = async () =>{
-        const res = await fetch('https://countriesnow.space/api/v0.1/countries')
-        const data = await res.json()
-        setContries(data)
-
-    }
-    const handleFilterChange = (text:string):void => {
-        setFilter(text)
-    }    
- const handleFilter = (text:string):void =>{ 
-    const filtered = countries.filter((item:any) => {
-        return item.country.toLowerCase().includes(text.toLowerCase());
-      });
-      setFilter(text);
-      console.log(filtered);
-    }
-    useEffect(() =>{
-        getData()
-    },[])
+  const [flyingTo,setFliyingTo] = React.useState<String>('')
   
+
+  const handleNavigate = () =>{
+    navigation.navigate("SelectDate",{to:flyingTo})
+  }
     return (
         <View style={styes.mainview}>
             
             <View style={styes.icon}>
                 <Icon name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
-                <Booking/> 
+                <Booking from={location} to={''}/> 
             </View>
             <View style={styes.textview}>
                 
               <Text style={styes.textInfo}>Where will you be flying to?</Text>
             </View>
             <View style={styes.inputView}>
-                <TextInput style={styes.input} placeholder='Select location' onChangeText={(text: string) => handleFilter(text)}value={filter} />
+                <TextInput style={styes.input} placeholder='Select location' onChangeText={setFliyingTo} />
             </View>
             <View style={styes.btnView}>
-                <TouchableOpacity style={styes.btnStyle}>
+                <TouchableOpacity style={styes.btnStyle} onPress={handleNavigate}>
                     <Text style={styes.btnText}>Next</Text>
                 </TouchableOpacity>
             </View>

@@ -9,6 +9,7 @@ import { RootStackParamList } from './RootStackParamList';
 import WhereAreYou from '../components/WhereAreYou';
 import SelectPassengers from '../components/SelectPassengers';
 import WhereWillYouBeFlyingTo from '../components/WhereWillYouBeFlyingTo';
+import SelectDate from '../components/SelectDate';
 
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,7 @@ function MyStack () {
              <Stack.Screen name="WhereAreYou" component={WhereAreYou} options={{headerShown: false}} />
              <Stack.Screen name="SelectPassengers" component={SelectPassengers} options={{headerShown: false}} />
              <Stack.Screen name="WhereWillYouBeFlyingTo" component={WhereWillYouBeFlyingTo} options={{headerShown: false}} />
+             <Stack.Screen name="SelectDate" component={SelectDate} options={{headerShown:false}}/>
         </Stack.Navigator>
     )
 }
