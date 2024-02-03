@@ -18,7 +18,7 @@ type LoginProps = {
   navigation: LoginNavigationProp;
 };
 
-const Login:React.FC <LoginProps> = () => {
+const Login:React.FC<LoginProps> = ({navigation}) => {
     const [user,setUser] = React.useState('')
     const [password,setPassword] = React.useState('')
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
@@ -27,7 +27,6 @@ const Login:React.FC <LoginProps> = () => {
       password:''
 
     })
-    const navigation = useNavigation()
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -93,9 +92,9 @@ const Login:React.FC <LoginProps> = () => {
 
     const handleSubmitgGoogle = async  () => {
 
-      console.log("log log")
+  
       try{
-          console.log("try")
+       
          await GoogleSignin.hasPlayServices()
          const {idToken}  = await GoogleSignin.signIn()
          console.log("token", idToken)

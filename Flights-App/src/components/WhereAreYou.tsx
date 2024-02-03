@@ -2,15 +2,21 @@ import React, { useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../rutes/RootStackParamList';
+import { RootStackParamList, WhereAreYouNavigationProp, WhereAreYouProp } from '../rutes/RootStackParamList';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
+import data from "../data/countrys"
 import AutoComplete from "react-native-autocomplete-input"
-const  WhereAreYou :React.FC=() => {
 
-  const navigation = useNavigation()
- 
-    const [text, setText] = React.useState<String>('')
+
+interface WhereAreYou{
+  route:WhereAreYouProp,
+  navigation:WhereAreYouNavigationProp;
+}
+
+
+const  WhereAreYou :React.FC<WhereAreYou>=({navigation}) => {
+
+    const [text, setText] = React.useState<string>('')
     
 
    
@@ -20,9 +26,35 @@ const  WhereAreYou :React.FC=() => {
           navigation.navigate('WhereWillYouBeFlyingTo',{from:text})
         }
         
-   
-   
+        const handleCountryChange = () =>{
 
+        }
+   interface City{
+    city:string[];
+    country:string;
+    iso3:string
+   }
+
+   
+        
+        const renderList = ({item}:{item:City}) =>{
+          
+          <View>
+            <Text>{item.city}</Text>
+          </View>
+        }
+
+        const [ query,setQuery] = React.useState('')
+
+        const handleFilter = () =>{
+          const suggestion = data.filter(function(country){
+              return country.cities.find(city => city.startsWith(text) ) 
+              
+              
+            
+          })
+          console.log("sug",suggestion)
+        }
 
   
     return (
@@ -32,9 +64,11 @@ const  WhereAreYou :React.FC=() => {
             </View>
             <View style={styes.textview}>
               <Text style={styes.textInfo}>Where are you now?</Text>
+             
+              
             </View>
             <View style={styes.inputView}>
-              <TextInput style={styes.input} placeholder='Select location' onChangeText={setText}></TextInput>
+              <TextInput style={styes.input} placeholder='Select location' onChangeText={setText} onChange={handleFilter}></TextInput>
                 
             </View>
             <View style={styes.btnView}>

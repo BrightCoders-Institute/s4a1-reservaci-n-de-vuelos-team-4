@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 interface BookingProps {
     from?: String;
-    to?: String;
+    to?: String ;
 }
 const Booking: React.FC<BookingProps> = ({ from, to }) => {
     return (
@@ -13,33 +13,27 @@ const Booking: React.FC<BookingProps> = ({ from, to }) => {
                 <View style={styles.infoFlight}>
 
                     <View style={styles.infoStarting}>
-                        <Text style={styles.textInfo}>{from}</Text>
+                        <Text style={styles.textInfo}>Mex</Text>
                         <Text style={styles.textInfo2}> Serbia </Text>
-
+                        <View style={styles.lineHorizontal} />
                     </View>
 
                     <View>
                         <Icon name='airplanemode-active' size={30} color="#4867aa" style={{ transform: [{ rotate: '90deg' }] }} />
                     </View>
-                
+
+                    <View style={styles.infoDestination}>
                         
-                        <View style={styles.infoDestination}>
-
-        {
-            to != undefined &&
-            <View>
-            <Text style={styles.textInfoDestination}>{to}</Text>
-            <Text style={styles.textInfo2}> Netherlands </Text>
-
-        </View>
-
-
-        }
-                           
-
-                        </View>
-                    
-
+                        
+                            <View>
+                        <Text style={styles.textInfoDestination}>US</Text>
+                        <Text style={styles.textInfo2}> Netherlands </Text>
+                        <View style={styles.lineHorizontal} />
+                            </View>
+                        
+                        
+                        
+                    </View>
 
 
                 </View>
@@ -56,12 +50,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         display: "flex",
         justifyContent: "center",
-        borderBottomColor: "gray",
-        borderBottomWidth: 0.5,
-        margin: 15,
-        width: "auto"
-
-
+        
+        
 
 
     },
@@ -69,24 +59,24 @@ const styles = StyleSheet.create({
 
         flexDirection: 'row',
         alignItems: 'center',
-
+        justifyContent: 'space-between',
     },
 
     infoStarting: {
-
-
+        marginBottom: 31,
+        marginLeft: 12,
         flex: 1,
         alignItems: 'flex-start', // Alinear a la izquierda
     },
 
     infoDestination: {
-
-
+        marginBottom: 1,
+        marginRight: 20,
         flex: 1,
         alignItems: 'flex-end', // Alinear a la derecha
     },
     textInfo: {
-
+        marginRight: '70%',
         fontWeight: "bold",
         fontSize: 25,
     },
@@ -95,8 +85,14 @@ const styles = StyleSheet.create({
         fontSize: 25,
     },
     textInfo2: {
-
+        marginTop: 1,
+        marginLeft: 2,
         color: 'gray',
+    },
+    lineHorizontal: {
+        borderBottomWidth: 0.4,
+        borderBottomColor: 'grey',
+        width: 190,
     },
     input: {
         borderBottomColor: "gray",

@@ -4,11 +4,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Icon2 from  'react-native-vector-icons/MaterialIcons'
 import Booking from './Booking';
+import { SelectPassengersNavigationProps, SelectPassengersProps } from 'rutes/RootStackParamList';
 
-
-const SelectPassengers: React.FC = () => {
+interface SelectPassengers {
+  route:SelectPassengersProps;
+  navigation:SelectPassengersNavigationProps;
+}
+const SelectPassengers: React.FC<SelectPassengers> = ({route,navigation}) => {
     const [selectedPassengers, setSelectedPassengers] = useState<number>(0);
-  
+    const from = route.params.from
+    const to = route.params.to
+    const date = route.params.date 
     const passengersOptions: string[] = [
         "1",
         "2",
@@ -30,10 +36,10 @@ const SelectPassengers: React.FC = () => {
     return (
         
         <View style={styles.container}>
-          {/* <View style={styles.icon}>
+          <View style={styles.icon}>
                 <Icon2 name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon2>
-                <Booking from={'MEx'} to={'Us'}/> 
-          </View> */}
+                <Booking from={from} to={to}/> 
+          </View>
             <Text style={styles.title}>How many passengers?</Text>
             <View>
               <Icon style={styles.caretleft} name ="caretleft" size={20} color="rgb(92, 110, 248)"></Icon>
@@ -62,9 +68,8 @@ const SelectPassengers: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'flex-start', 
-      alignItems: 'center',
-      paddingTop: 40,
+      padding:10,
+      marginLeft:10
     },
     title: {
       fontSize: 40,

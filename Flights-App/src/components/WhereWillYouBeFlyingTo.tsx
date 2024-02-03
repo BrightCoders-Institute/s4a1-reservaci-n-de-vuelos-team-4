@@ -10,21 +10,20 @@ interface WhereWillYouBeFlyingTo{
     route:WhereWillYouBeFlyingToProp;
     navigation:WhereWillYouBeFlyingToNavigationProp;
 }
-const  WhereWillYouBeFlyingTo :React.FC<WhereWillYouBeFlyingTo>=({route}) => {
+const  WhereWillYouBeFlyingTo :React.FC<WhereWillYouBeFlyingTo>=({route,navigation}) => {
   const location = route.params.from
-  const navigation = useNavigation()
   const [flyingTo,setFliyingTo] = React.useState<String>('')
   
 
   const handleNavigate = () =>{
-    navigation.navigate("SelectDate",{to:flyingTo})
+    navigation.navigate("SelectDate",{to:flyingTo,from:location})
   }
     return (
         <View style={styes.mainview}>
             
             <View style={styes.icon}>
                 <Icon name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
-                <Booking from={location} to={''}/> 
+                <Booking from={location} /> 
             </View>
             <View style={styes.textview}>
                 
