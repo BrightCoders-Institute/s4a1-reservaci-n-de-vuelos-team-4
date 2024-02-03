@@ -7,10 +7,8 @@ import { RootStackParamList } from '../rutes/RootStackParamList';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebaseConfig";
-import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
+import { GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleAuthProvider,signInWithCredential } from 'firebase/auth';
 import { auth } from '../../firebaseConfig.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -29,10 +27,6 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
     const [email, setEmail] = React.useState('')
     const [borderColor, setBorderColor] = React.useState('rgb(92, 110, 248)')
 
-    const [request, response, promptAsync] = Google.useAuthRequest({
-        androidClientId: '885739237783-dv56mbfe0kdd2ltvji249qkkn4uhcrjc.apps.googleusercontent.com',
-        
-    });
 
     const app = initializeApp(firebaseConfig);
     const authh = getAuth(app);
@@ -161,13 +155,16 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <Text onPress={() => navigation.navigate('Login')}>
                     Aready have an account? Click here to login!
                 </Text>
+                <Text onPress={() => signOut}>
+                    log Out
+                </Text>
 
 
 
             </View>
         </SafeAreaView>
     );
-
+    
 }
 const styles = StyleSheet.create({
     textTitle: {
