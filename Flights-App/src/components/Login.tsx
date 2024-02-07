@@ -164,6 +164,9 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
             <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereWillYouBeFlyingTo")}>
                 <Text style={styles.btnText}>WhereWillYouBeFlyingTo</Text>
             </TouchableOpacity>
+            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("RequestReceived")}>
+                <Text style={styles.btnText}>RequestReceived</Text>
+            </TouchableOpacity>
     </View>
     </SafeAreaView>
     

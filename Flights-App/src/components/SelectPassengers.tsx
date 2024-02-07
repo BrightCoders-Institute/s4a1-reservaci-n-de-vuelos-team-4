@@ -6,11 +6,11 @@ import Icon2 from  'react-native-vector-icons/MaterialIcons'
 import Booking from './Booking';
 import { SelectPassengersNavigationProps, SelectPassengersProps } from 'rutes/RootStackParamList';
 
-interface SelectPassengers {
+interface SelectPassengers{
   route:SelectPassengersProps;
   navigation:SelectPassengersNavigationProps;
 }
-const SelectPassengers: React.FC<SelectPassengers> = ({route,navigation}) => {
+const SelectPassengersScreen: React.FC<SelectPassengers> = ({route,navigation}) => {
     const [selectedPassengers, setSelectedPassengers] = useState<number>(0);
     const from = route.params.from
     const to = route.params.to
@@ -72,12 +72,9 @@ const styles = StyleSheet.create({
       marginLeft:10
     },
     title: {
-      fontSize: 40,
-      marginBottom: 20,
-      fontWeight: 'bold',
-      textAlign: 'left',
-      alignSelf: 'flex-start',
-      marginLeft: 40,
+      fontWeight:"bold",
+      fontSize:50,
+      justifyContent:"flex-start",
     },
     wheelPicker: {
       width: 320,
@@ -133,4 +130,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default SelectPassengers;
+export default SelectPassengersScreen;

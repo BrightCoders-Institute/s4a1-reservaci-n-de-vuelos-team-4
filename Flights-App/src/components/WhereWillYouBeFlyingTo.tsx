@@ -76,6 +76,7 @@ const styes = StyleSheet.create({
 
       },
       icon:{
+        marginTop: 50,
         flex:1
       },
       btnView:{

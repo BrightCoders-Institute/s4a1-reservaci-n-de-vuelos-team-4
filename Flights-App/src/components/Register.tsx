@@ -12,10 +12,6 @@ import { GoogleAuthProvider,signInWithCredential } from 'firebase/auth';
 import { auth } from '../../firebaseConfig.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-
-
 type RegisterNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>
 type RegisterProps = {
     navigation: RegisterNavigationProp;
@@ -158,9 +154,6 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <Text onPress={() => signOut}>
                     log Out
                 </Text>
-
-
-
             </View>
         </SafeAreaView>
     );

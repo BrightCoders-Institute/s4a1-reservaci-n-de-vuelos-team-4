@@ -5,8 +5,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 interface BookingProps {
     from?: String;
     to?: String;
+    date?:String;
+    passangers?:Number;
 }
-const Booking: React.FC<BookingProps> = ({ from, to }) => {
+const Booking: React.FC<BookingProps> = ({ from, to,date,passangers }) => {
     return (
         <SafeAreaView>
             <View style={styles.mainView}>
@@ -35,15 +37,14 @@ const Booking: React.FC<BookingProps> = ({ from, to }) => {
 
 
         }
-                           
-
+                        
                         </View>
-                    
-
-
-
                 </View>
+                {
+                    date != undefined && 
+                    <Text>{date}</Text>
 
+                }
             </View>
         </SafeAreaView>
     )

@@ -17,12 +17,12 @@ export type RootStackParamList = {
   Home: {userID:Number};
   Register: undefined;
   Login:undefined;
-  Booking:{from?:String,to?:String};
+  Booking:{from?:String,to?:String,date?:String,passangers?:Number};
   SelectDate:{from?:String,to?:String};
-  WhereAreYou:undefined;
-  SelectPassengers:{from?:String,to?:String,date?:String};
+  WhereAreYou:{from?:String,to?:String,date?:String,passangers:Number};
+  SelectPassengers:{};
   WhereWillYouBeFlyingTo:{from?:String};
-
+  
 }
 
 export type RootStackRouteProps<T extends keyof RootStackParamList> = {

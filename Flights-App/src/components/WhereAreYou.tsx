@@ -13,40 +13,30 @@ interface WhereAreYou{
   navigation:WhereAreYouNavigationProp;
 }
 
-
 const  WhereAreYou :React.FC<WhereAreYou>=({navigation}) => {
 
-    const [text, setText] = React.useState<string>('')
-    
-
    
-    
-  
         const handleNavigate = () =>{
           navigation.navigate('WhereWillYouBeFlyingTo',{from:text})
         }
-        
         const handleCountryChange = () =>{
-
         }
    interface City{
     city:string[];
     country:string;
     iso3:string
    }
-
-   
-        
         const renderList = ({item}:{item:City}) =>{
           
           <View>
             <Text>{item.city}</Text>
           </View>
         }
-
         const [ query,setQuery] = React.useState('')
+        const handleFilter = (text:string) =>{
+            if(text.length > 3) {
 
-        const handleFilter = () =>{
+            }
           const suggestion = data.filter(function(country){
               return country.cities.find(city => city.startsWith(text) ) 
               
@@ -58,34 +48,31 @@ const  WhereAreYou :React.FC<WhereAreYou>=({navigation}) => {
 
   
     return (
-        <View style={styes.mainview}>
-            <View style={styes.icon}>
+      <View style={styles.mainview}>
+            <View style={styles.icon}>
                 <Icon name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
             </View>
-            <View style={styes.textview}>
-              <Text style={styes.textInfo}>Where are you now?</Text>
-             
-              
+            <View style={styles.textview}>
+              <Text style={styles.textInfo}>Where are you now?</Text>
             </View>
-            <View style={styes.inputView}>
-              <TextInput style={styes.input} placeholder='Select location' onChangeText={setText} onChange={handleFilter}></TextInput>
+            <View style={styles.inputView}>
+              <TextInput style={styles.input} placeholder='Select location' onChangeText={handleFilter} ></TextInput>
                 
             </View>
-            <View style={styes.btnView}>
-                <TouchableOpacity style={styes.btnStyle} onPress={handleNavigate}>
-                    <Text style={styes.btnText}>Next</Text>
+            <View style={styles.btnView}>
+                <TouchableOpacity style={styles.btnStyle} onPress={handleNavigate}>
+                    <Text style={styles.btnText}>Next</Text>
                 </TouchableOpacity>
             </View>
             
-        </View>
-  )
+      </View>
+    )
 }
-const styes = StyleSheet.create({
+const styles = StyleSheet.create({
     mainview:{
         flex:1,
         padding:10,
         marginLeft:10
-
     },
     btnStyle: {
         backgroundColor: "rgb(92, 110, 248)",
@@ -108,14 +95,13 @@ const styes = StyleSheet.create({
         justifyContent:"flex-start",
       },
       textview:{
-        
         width:"100%",
         justifyContent:"flex-start",
         flex:2
-
       },
       icon:{
-        flex:1
+        flex:1,
+        marginTop: 50,
       },
       btnView:{
         flex:1
