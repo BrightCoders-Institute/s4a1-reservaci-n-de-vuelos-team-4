@@ -19,44 +19,54 @@ const  WhereWillYouBeFlyingTo :React.FC<WhereWillYouBeFlyingTo>=({route,navigati
     navigation.navigate("SelectDate",{to:flyingTo,from:location})
   }
     return (
-        <View style={styes.mainview}>
+        <View style={styles.mainview}>
             
-            <View style={styes.icon}>
-                <Icon name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
+            <View style={styles.icon}>
+                <Icon style={styles.arrow} name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
                 <Booking from={location} /> 
             </View>
-            <View style={styes.textview}>
+            <View style={styles.textview}>
                 
-              <Text style={styes.textInfo}>Where will you be flying to?</Text>
+              <Text style={styles.textInfo}>Where will you be flying to?</Text>
             </View>
-            <View style={styes.inputView}>
-                <TextInput style={styes.input} placeholder='Select location' onChangeText={setFliyingTo} />
+            <View style={styles.inputView}>
+                <TextInput style={styles.input} placeholder='Select location' onChangeText={setFliyingTo} />
             </View>
-            <View style={styes.btnView}>
-                <TouchableOpacity style={styes.btnStyle} onPress={handleNavigate}>
-                    <Text style={styes.btnText}>Next</Text>
+            <View >
+                <TouchableOpacity style={styles.btnStyle} onPress={handleNavigate}>
+                    <Text style={styles.btnText}>Next</Text>
                 </TouchableOpacity>
             </View>
             
         </View>
   )
 }
-const styes = StyleSheet.create({
+const styles = StyleSheet.create({
     mainview:{
         flex:1,
         padding:10,
-        marginLeft:10
-
     },
+
+    arrow:{
+      marginLeft: 14, 
+    }, 
     btnStyle: {
-        backgroundColor: "rgb(92, 110, 248)",
-        borderRadius: 10,
-        marginBottom: 10,
-        marginTop: 10,
-        padding: 12,
-        shadowColor: "rgb(92, 110, 248)",
-        width: "100%",
+      alignSelf:'center',
+      backgroundColor: "rgb(92, 110, 248)",
+      borderRadius: 10,
+      marginBottom: 50,
+      marginTop: 10,
+      padding: 12,
+      shadowOffset: {
+        width: 0,
+        height: 11,
       },
+      shadowOpacity: 0.57,
+      shadowRadius: 15.19,
+      elevation: 23,
+      shadowColor: "rgb(92, 110, 248)",
+      width: "92%",
+    },
       
       btnText: {
         color: "white",
@@ -64,8 +74,9 @@ const styes = StyleSheet.create({
         textAlign: "center",
       },
       textInfo:{
+        marginLeft:14,
         fontWeight:"bold",
-        fontSize:48,
+        fontSize:44,
         justifyContent:"flex-start",
       },
       textview:{
@@ -84,10 +95,11 @@ const styes = StyleSheet.create({
       },
       inputView:{
         flex:3,
-        width:"100%"
+        width:"100%",
+        marginLeft:14,
       },
       input:{
-        width:"100%",
+        width:"94%",
         borderBottomColor:"gray",
         borderBottomWidth:1
       }

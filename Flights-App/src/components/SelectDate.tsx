@@ -31,7 +31,7 @@ const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
     <SafeAreaView style={styles.container}> 
     <View >
       <View style={styles.icon}>
-                <Icon name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
+                <Icon style={styles.arrow} name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
                 <Booking to={to} from={from} />
       </View>
        
@@ -51,7 +51,7 @@ const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
           style={styles.calendar}
           theme={{
             selectedDayBackgroundColor: '#5C6EF8',
-            textMonthFontSize: 35, // Ajusta el tamaño de la fuente del mes según tus necesidades
+            textMonthFontSize: 25, // Ajusta el tamaño de la fuente del mes según tus necesidades
             textMonthFontWeight: 'bold', // Ajusta el peso de la fuente del mes si es necesario
             monthTextColor: 'black', // Cambia el color si es necesario
             calendarBackground: 'transparent',
@@ -65,10 +65,10 @@ const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
         />
       </View>
       <View>
-                <TouchableOpacity style={styles.btnStyle} onPress={handleNavigate}>
-                    <Text style={styles.btnText}>Next</Text>
-                </TouchableOpacity>
-            </View>
+        <TouchableOpacity style={styles.btnStyle} onPress={handleNavigate}>
+            <Text style={styles.btnText}>Next</Text>
+        </TouchableOpacity>
+      </View>
     </View>
     </SafeAreaView>
   );
@@ -79,8 +79,13 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
+    padding:10,
     justifyContent: 'center',
     alignItems: 'center', 
+  },
+
+  arrow:{
+    marginLeft:14,
   },
   title: {
     fontSize: 35,
@@ -107,13 +112,21 @@ const styles = StyleSheet.create({
   },
 
   btnStyle: {
+    alignSelf:'center',
     backgroundColor: "rgb(92, 110, 248)",
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 50,
     marginTop: 10,
     padding: 12,
+    shadowOffset: {
+      width: 0,
+      height: 11,
+    },
+    shadowOpacity: 0.57,
+    shadowRadius: 15.19,
+    elevation: 23,
     shadowColor: "rgb(92, 110, 248)",
-    width: "100%",
+    width: "92%",
   },
 
   btnText: {

@@ -13,6 +13,9 @@ export type SelectPassengersNavigationProps = StackNavigationProp<RootStackParam
 export type WhereAreYouProp = RouteProp<RootStackParamList,"WhereAreYou">
 export type WhereAreYouNavigationProp = StackNavigationProp<RootStackParamList,"WhereAreYou">
 
+export type RequestReceivedProps = RouteProp<RootStackParamList,"RequestReceived">
+export type RequestReceivedNavigationProp = StackNavigationProp<RootStackParamList,"RequestReceived">
+
 export type RootStackParamList = {
   Home: {userID:Number};
   Register: undefined;
@@ -22,7 +25,7 @@ export type RootStackParamList = {
   WhereAreYou:{from?:String,to?:String,date?:String,passangers:Number};
   SelectPassengers:{};
   WhereWillYouBeFlyingTo:{from?:String};
-  
+  RequestReceived:{from?:String,to?:String,date?:String,passangers?:Number};
 }
 
 export type RootStackRouteProps<T extends keyof RootStackParamList> = {
