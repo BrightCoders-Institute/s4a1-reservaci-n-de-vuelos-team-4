@@ -6,7 +6,7 @@ interface BookingProps {
   from?: String;
   to?: String;
   date?: String;
-  passangers?: Number;
+  passangers: number;
   fromIso3: String;
   toIso3: String;
 }
@@ -41,7 +41,7 @@ const Booking: React.FC<BookingProps> = ({
               <View>
                 <Text style={styles.textInfoDestination}>{to}</Text>
                 <Text style={styles.textInfo2}> {toIso3} </Text>
-                {passangers != 0 && <Text>{passangers  + ' passangers'}</Text>}
+                {passangers > 0 && <Text>{passangers  + ' passangers'}</Text>}
               </View>
             )}
           </View>    
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   textInfoDestination: {
     fontWeight: "bold",
     fontSize: 25,
+    textAlign:"center"
   },
   textInfo2: {
     color: "gray",

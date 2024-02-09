@@ -153,31 +153,7 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
             </TouchableOpacity>
         </View>
         <Text onPress={()=>navigation.navigate("Register")}>    Don't have an account?</Text>
-        <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("Booking")}>
-                <Text style={styles.btnText}>Booking</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereAreYou")}>
-                <Text style={styles.btnText}>Where</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("SelectPassengers")}>
-                <Text style={styles.btnText}>Passagers</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("SelectDate")}>
-                <Text style={styles.btnText}>Select Date</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereWillYouBeFlyingTo")}>
-                <Text style={styles.btnText}>WhereWillYouBeFlyingTo</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("RequestReceived")}>
-                <Text style={styles.btnText}>RequestReceived</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("MyFlights")}>
-                <Text style={styles.btnText}>MyFlights</Text>
-            </TouchableOpacity>
+        
     </View>
     </SafeAreaView>
     

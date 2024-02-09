@@ -6,14 +6,14 @@ import Icon2 from  'react-native-vector-icons/MaterialIcons'
 import Booking from './Booking';
 import { SelectPassengersNavigationProps, SelectPassengersProps } from 'rutes/RootStackParamList';
 
-import { saveInfo } from '../../firebaseConfig';
 
 interface SelectPassengers{
   route:SelectPassengersProps;
   navigation:SelectPassengersNavigationProps;
 }
 const SelectPassengersScreen: React.FC<SelectPassengers> = ({route,navigation}) => {
-    const [selectedPassengers, setSelectedPassengers] = useState<number>(0);
+
+    const [selectedPassengers, setSelectedPassengers] = useState(0);
     const from = route?.params?.from
     const to = route?.params?.to
     const date = route.params.date 
@@ -22,9 +22,7 @@ const SelectPassengersScreen: React.FC<SelectPassengers> = ({route,navigation}) 
     
     
     const handleNavigate = () => {
-
-      saveInfo(from,fromIso3,toIso3,to,date,selectedPassengers+1)
-
+      
       navigation.navigate("RequestReceived",{from:from,to:to,date:date,toIso3:toIso3,fromIso3:fromIso3,passangers:selectedPassengers})
     }
     
@@ -45,6 +43,8 @@ const SelectPassengersScreen: React.FC<SelectPassengers> = ({route,navigation}) 
   ];
 
     const handlePassengerChange = (index: string) => {
+      console.log("Index seleccionado:", index);
+      console.log("Valor seleccionado en passengersOptions:", passengersOptions[index]);
       setSelectedPassengers(parseInt(passengersOptions[index]));
     };
     return (
@@ -61,7 +61,7 @@ const SelectPassengersScreen: React.FC<SelectPassengers> = ({route,navigation}) 
               
               <WheelPicker
               options={passengersOptions}
-              selectedIndex={selectedPassengers}
+              selectedIndex={Math.max(selectedPassengers - 1, 0)}
               onChange={handlePassengerChange}
               itemStyle={styles.wheelPicker}
               itemTextStyle={styles.wheelPickerText}

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, addDoc , getDocs,where} from 'firebase/firestore';
+import { getFirestore, collection, addDoc , getDocs,where, query,orderBy} from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const firebaseConfig = {
   apiKey: "AIzaSyDkMB58AOGO2a-FyaPHhJpAef7aJ81WXro",
@@ -27,12 +27,24 @@ const saveInfo = async (from,fromIso3,toIso3,to,date,passangers) => {
 }
 
 const loadInfo = async () =>{
-  const userId = await AsyncStorage.getItem('userID')
-  const snapshot =  await getDocs(collection(db,'flights', where('userId','==',userId)))
-  const updatedFlights = []
-                   snapshot.forEach(doc => {
-                        updatedFlights.push({id:doc.id, ...doc.data()})
-                    })
-                    return updatedFlights
+  try{
+    const userId = await AsyncStorage.getItem('userID')
+    const docsQuery = query(collection(db,"flights"),where("userId","==",userId))
+    const snapshot = await getDocs(docsQuery)
+    const fligths = []
+    snapshot.forEach(doc => {
+      fligths.push(doc.data())
+      
+    })
+    if(fligths == []){
+      return null
+    }else {
+      return fligths    
+    }
+    
+  }catch(err){
+    console.log("loaderror",err)
+  }
+  
 }
 export  { firebaseConfig, auth, getFirestore,db, saveInfo, loadInfo };

@@ -1,105 +1,97 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { SafeAreaView, Text, View, FlatList, StyleSheet,TouchableOpacity } from 'react-native'
 //import * as firebase from 'firebase/app'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
-import { firebaseConfig, loadInfo } from "../../firebaseConfig";
+import {loadInfo } from "../../firebaseConfig";
 import Booking from './Booking';
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { MyFlightsProps,MyFlightsNavigation } from 'rutes/RootStackParamList'
+import { useFocusEffect } from '@react-navigation/native'
 
-firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore()
 
-const MyFlights: React.FC = () => {
-    const [flights, setFlights] = useState<any>([])
+interface MyFlights {
+  navigation: MyFlightsNavigation;
+}
+
+const MyFlights: React.FC<MyFlights>= ({navigation}) => {
+    const [flights, setFlights] = useState<any>()
     const getData = async () =>{
-        const data = await loadInfo()
-        console.log(data)
-        setFlights(data)
+        const flightsArr = await loadInfo()
+        
+        setFlights(flightsArr)
+        
     }
-    useEffect(() => {
-        // const loadFlights = async() =>{
-        //     try{
-            
-        //         const userId = firebase.auth().currentUser?.uid
-        //         if(userId){
-        //             const snapshot = await firebase.firestore().collection('flights').where('userID', '==', userId).get();
-        //             const updatedFlights: any[] = []
-        //             snapshot.forEach(doc => {
-        //                 updatedFlights.push({id:doc.id, ...doc.data()})
-        //             })
-        //             setFlights(updatedFlights)
-        //         }
-                
-        //     } catch(error){
-        //         console.error(error)
-        //     }
-        // }
-        getData()
-       
-            
-    },[])
+    useFocusEffect(
+      useCallback(() => {
+        getData();
+      }, [])
+    );
+    const handleNavigate = () =>{
+      navigation.navigate("WhereAreYou")
+    }
     
-  return (
-    <SafeAreaView>
+    
+    return (
+    
+      
         <View style={styles.container}>
-            <View>
+            <View style={{flex:1}}>
                 <Text style={styles.title}>My flights </Text>
             </View>
-            {/* {flights.map((item:any) =>{
-                <Booking from={item.from} to={item.to} fromIso3={item.fromIso3} toIso3={item.toIso3} date={item.date} passangers={item.passangers} />
-            })} */}
-            <View>
-                
-            </View>
+            <View style={{flex:6}}>
+              {
+                flights &&
+                <FlatList 
+                data={flights}
+                renderItem={({ item }) => <Booking from={item.from} to={item.to} fromIso3={item.fromIso3} toIso3={item.toIso3} date={item.date} passangers={item.passangers} />}>
 
-            <View>
-               <TouchableOpacity style={styles.btnStyle}>
-                  <Text style={styles.btnText}>Next</Text>
-                </TouchableOpacity>
+                </FlatList>
+
+              }
             </View>
+            <View style={styles.btnContainer}>
+                  <TouchableOpacity onPress={handleNavigate}>
+                    <Icon name='add-circle' 
+                    size={90}
+                    color="#4867aa">  
+                    </Icon>
+                  </TouchableOpacity>
+                </View>
+           
         </View>
 
-
-    </SafeAreaView>
+       
+  
    
   )
 }
 
 const styles = StyleSheet.create({
     container:{
+      display:"flex",
+      flex:1,
+      
     }, 
+    
+    btnContainer:{
+      position:'absolute',
+      bottom:20,
+      left:0,
+      right:0,
+      alignItems:"center",
+    },
 
     title:{
         fontWeight:'bold',
         fontSize:40,
         justifyContent:"flex-start",
         marginLeft:14,
-        marginTop: 50,
+        marginTop: 40,
         color: '#5C6EF8',
-    },
-    btnStyle: {
-      alignSelf:'center',
-      backgroundColor: "rgb(92, 110, 248)",
-      borderRadius: 50,
-      marginBottom: 50,
-      marginTop: 10,
-      padding: 12,
-      shadowOffset: {
-        width: 0,
-        height: 11,
-      },
-      shadowOpacity: 0.57,
-      shadowRadius: 15.19,
-      elevation: 23,
-      shadowColor: "rgb(92, 110, 248)",
-      width: "92%",
-    },
-  
-    btnText: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center",
+        
+    
     },
     
 })

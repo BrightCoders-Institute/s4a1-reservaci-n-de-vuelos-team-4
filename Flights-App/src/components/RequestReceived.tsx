@@ -4,6 +4,7 @@ import {RequestReceivedNavigationProp, RequestReceivedProps} from "../rutes/Root
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Booking from './Booking';
 
+import { saveInfo } from '../../firebaseConfig';
 interface RequestReceived {
   navigation: RequestReceivedNavigationProp;
   route: RequestReceivedProps;
@@ -21,7 +22,8 @@ const RequestReceived: React.FC<RequestReceived> = ({ navigation, route}) => {
   const passangers = route.params.passangers
 
   const handleNavigate = () =>{
-
+      saveInfo(from,fromIso3,toIso3,to,date,passangers);
+      navigation.navigate("MyFlights")
   }
 
   return (
