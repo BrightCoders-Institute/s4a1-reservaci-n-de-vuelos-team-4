@@ -17,15 +17,15 @@ export type RequestReceivedProps = RouteProp<RootStackParamList,"RequestReceived
 export type RequestReceivedNavigationProp = StackNavigationProp<RootStackParamList,"RequestReceived">
 
 export type RootStackParamList = {
-  Home: {userID:Number};
   Register: undefined;
   Login:undefined;
-  Booking:{from?:String,to?:String,date?:String,passangers?:Number};
-  SelectDate:{from?:String,to?:String};
-  WhereAreYou:{from?:String,to?:String,date?:String,passangers:Number};
-  SelectPassengers:{};
-  WhereWillYouBeFlyingTo:{from?:String};
-  RequestReceived:{from?:String,to?:String,date?:String,passangers?:Number};
+  Booking:{from?:String,to?:String,date?:String,passangers?:Number, fromIso3?:String, toIso3?:String};
+  SelectDate:{from?:String,to?:String, fromIso3?:String, toIso3?:String};
+  WhereAreYou:undefined;
+  SelectPassengers:{from?:String,to?:String,date?:String,fromIso3?:String, toIso3?:String};
+  WhereWillYouBeFlyingTo:{from?:String,fromIso3?:String};
+  RequestReceived:{from?:String,to?:String,date?:String,passangers?:Number,fromIso3?:String, toIso3?:String};
+  MyFlights:{userUID:String};
 }
 
 export type RootStackRouteProps<T extends keyof RootStackParamList> = {

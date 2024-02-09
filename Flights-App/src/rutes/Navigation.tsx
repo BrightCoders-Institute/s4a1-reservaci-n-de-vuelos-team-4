@@ -11,6 +11,7 @@ import SelectPassengers from '../components/SelectPassengers';
 import WhereWillYouBeFlyingTo from '../components/WhereWillYouBeFlyingTo';
 import SelectDate from '../components/SelectDate';
 import RequestReceived from '../components/RequestReceived';
+import MyFlights from '../components/MyFlights';
 
 
 
@@ -28,6 +29,7 @@ function MyStack () {
              <Stack.Screen name="WhereWillYouBeFlyingTo" component={WhereWillYouBeFlyingTo} options={{headerShown: false}} />
              <Stack.Screen name="SelectDate" component={SelectDate} options={{headerShown:false}}/>
              <Stack.Screen name="RequestReceived" component={RequestReceived} options={{ headerShown: false }} />
+             <Stack.Screen name="MyFlights" component={MyFlights} options={{ headerShown: false }} />
         </Stack.Navigator>
     )
 }

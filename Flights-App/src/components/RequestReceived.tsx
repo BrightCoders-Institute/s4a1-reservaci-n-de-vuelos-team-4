@@ -13,11 +13,13 @@ const RequestReceived: React.FC<RequestReceived> = ({ navigation, route}) => {
   const handleFinish = () => {
     // Navegar a otra pantalla o realizar cualquier acción necesaria al hacer clic en "Finish"
   };
-  
-  //const to = route.params.to
-  //const from = route.params.from
-  //const date = route.params.date
-  //const passangers = route.params.passangers
+  const from = route?.params?.from
+  const to = route?.params?.to
+  const fromIso3 = route?.params?.fromIso3
+  const toIso3 = route?.params?.toIso3
+  const date = route.params.date
+  const passangers = route.params.passangers
+
   const handleNavigate = () =>{
 
   }
@@ -27,7 +29,7 @@ const RequestReceived: React.FC<RequestReceived> = ({ navigation, route}) => {
     <Icon style={styles.arrow} name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)"  onPress={() => navigation.goBack()}></Icon>
       <View style={styles.icon}>
         
-        <Booking to={'MEX'} from={'USA'} date = {'06/feb/2024'} passangers={4}/>
+        <Booking to={to} from={from} toIso3={toIso3} fromIso3={fromIso3} date={date} passangers={passangers}/>
       </View>
       <View style={styles.textView}>
         <Text style={styles.title}>Your request was received.</Text>

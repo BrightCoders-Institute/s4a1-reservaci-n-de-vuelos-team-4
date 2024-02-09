@@ -1,36 +1,102 @@
 import React, { useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Alert } from 'react-native'
+import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity,Modal, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, WhereWillYouBeFlyingToNavigationProp, WhereWillYouBeFlyingToProp } from '../rutes/RootStackParamList';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Booking from './Booking';
-
+import data from "../data/countrys";
 interface WhereWillYouBeFlyingTo{
     route:WhereWillYouBeFlyingToProp;
     navigation:WhereWillYouBeFlyingToNavigationProp;
 }
 const  WhereWillYouBeFlyingTo :React.FC<WhereWillYouBeFlyingTo>=({route,navigation}) => {
-  const location = route.params.from
-  const [flyingTo,setFliyingTo] = React.useState<String>('')
-  
+  const from = route.params.from
+  const fromIso3 = route.params.fromIso3
+  const [flyingTo,setFliyingTo] = React.useState({
+    to:'',
+    toIso3:''
+  })
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const handleSelectCity = (city: string, iso3: string) => {
+
+    setModalVisible(false)
+    setFliyingTo({ to: city, toIso3: iso3 })
+  }
+  const RenderList = (item: any) => {
+    return (
+      <View>
+        <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+          {item.item.iso3}
+        </Text>
+
+        <View style={{ marginLeft: 5 }}>
+          {item.item.cities.map((city: string) => {
+            return (
+              <TouchableOpacity
+                style={{ padding: 4, borderBottomColor: "gray" }}
+                key={city}
+                onPress={() => handleSelectCity(city, item.item.iso3)}
+              >
+                <Text style={{ fontSize: 20 }}>{city}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
 
   const handleNavigate = () =>{
-    navigation.navigate("SelectDate",{to:flyingTo,from:location})
+    navigation.navigate("SelectDate",{to:flyingTo.to,from:from,fromIso3:fromIso3, toIso3:flyingTo.toIso3})
   }
     return (
         <View style={styles.mainview}>
             
             <View style={styles.icon}>
                 <Icon style={styles.arrow} name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
-                <Booking from={location} /> 
+                <Booking from={from} fromIso3={fromIso3} /> 
             </View>
             <View style={styles.textview}>
                 
               <Text style={styles.textInfo}>Where will you be flying to?</Text>
             </View>
             <View style={styles.inputView}>
-                <TextInput style={styles.input} placeholder='Select location' onChangeText={setFliyingTo} />
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <View style={styles.input}>
+            {
+              flyingTo && <Text>{flyingTo.to + ", "}{flyingTo.toIso3}</Text>
+            }
+            {
+              flyingTo.to == '' && <Text>Select location</Text>
+            }
+
+          </View>
+        </TouchableOpacity>
+
+        <Modal
+          visible={modalVisible}
+          transparent={true}
+          onRequestClose={() => setModalVisible(false)}
+          animationType={'slide'}
+
+
+        >
+
+          <View style={{ flex: 1, justifyContent: "flex-end", }}>
+            <View style={{ backgroundColor: 'white', padding: 20, alignSelf: "center", width: "100%", height: "55%" }}>
+              <FlatList
+                data={data}
+                keyExtractor={item => item.iso3}
+                renderItem={({ item }) => <RenderList item={item} />}
+
+              >
+
+              </FlatList>
+            </View>
+          </View>
+        </Modal>
             </View>
             <View >
                 <TouchableOpacity style={styles.btnStyle} onPress={handleNavigate}>

@@ -16,6 +16,8 @@ interface SelectDate {
 const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
      const from = route?.params?.from
      const to = route?.params?.to
+     const fromIso3 = route?.params?.fromIso3
+     const toIso3 = route?.params?.toIso3
     //const navigation = useNavigation()
     const SelectDateee = () => {
         const [selected, setSelected] = React.useState('');
@@ -23,7 +25,7 @@ const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
     
     };
     const handleNavigate = () =>{
-        navigation.navigate("SelectPassengers",{from:from,to:to,date:selected})
+        navigation.navigate("SelectPassengers",{from:from,to:to,date:selected,toIso3:toIso3,fromIso3:fromIso3})
     }
     const [selected, setSelected] = useState('');
 
@@ -32,7 +34,7 @@ const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
     <View >
       <View style={styles.icon}>
                 <Icon style={styles.arrow} name ="arrow-back-ios" size={30} color="rgb(92, 110, 248)" onPress={() => navigation.goBack()}></Icon>
-                <Booking to={to} from={from} />
+                <Booking to={to} from={from} toIso3={toIso3} fromIso3={fromIso3} date={selected}/>
       </View>
        
       <Text style={styles.title}>Select Date</Text>
@@ -66,7 +68,7 @@ const SelectDate: React.FC<SelectDate> = ({ route,navigation }) => {
       </View>
       <View>
         <TouchableOpacity style={styles.btnStyle} onPress={handleNavigate}>
-            <Text style={styles.btnText}>Next</Text>
+            <Text style={styles.btnText}> Next </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -95,9 +97,9 @@ const styles = StyleSheet.create({
     marginRight: 190,
   },
   calendar: {
-    marginLeft: 10,
-    width: 300,
-    height: 300,
+    marginLeft: 20,
+    width: 350,
+    height: 350,
     backgroundColor: 'transparent',
   },
   mainView: {

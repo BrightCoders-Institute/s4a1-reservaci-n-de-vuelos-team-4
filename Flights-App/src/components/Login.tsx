@@ -7,7 +7,7 @@ import { RootStackParamList } from '../rutes/RootStackParamList';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebaseConfig";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin, } from '@react-native-google-signin/google-signin';
 
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
@@ -27,18 +27,25 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
       password:''
 
     })
+  
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+
+    const handleNavigate = (userUID:String) =>{
+      navigation.navigate("MyFlights",{userUID:userUID})
+    }
 
     const handleUserFirebase = () => {
         signInWithEmailAndPassword(auth, user, password)
         .then((userCredential) => {
             // Signed in 
-            console.log("User login!")
+          
             const user = userCredential.user;
-            console.log("user", user)
-            // ...
+           
+            console.log("uid", user.uid)
+            AsyncStorage.setItem('userID',user.uid)
+            handleNavigate(user.uid)
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -49,7 +56,7 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
               console.log("error", errorCode, errorMessage)
             }
             
-            Alert.alert(errorMessage)
+            Alert.alert("Ocurrio un error en el servidor")
             // ..
         });
     }
@@ -166,6 +173,10 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("RequestReceived")}>
                 <Text style={styles.btnText}>RequestReceived</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("MyFlights")}>
+                <Text style={styles.btnText}>MyFlights</Text>
             </TouchableOpacity>
     </View>
     </SafeAreaView>
