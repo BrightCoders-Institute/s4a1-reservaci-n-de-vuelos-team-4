@@ -7,7 +7,7 @@ import { RootStackParamList } from '../rutes/RootStackParamList';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebaseConfig";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin, } from '@react-native-google-signin/google-signin';
 
 import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
@@ -27,18 +27,25 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
       password:''
 
     })
+  
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+
+    const handleNavigate = (userUID:String) =>{
+      navigation.navigate("MyFlights",{userUID:userUID})
+    }
 
     const handleUserFirebase = () => {
         signInWithEmailAndPassword(auth, user, password)
         .then((userCredential) => {
             // Signed in 
-            console.log("User login!")
+          
             const user = userCredential.user;
-            console.log("user", user)
-            // ...
+           
+            console.log("uid", user.uid)
+            AsyncStorage.setItem('userID',user.uid)
+            handleNavigate(user.uid)
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -49,7 +56,7 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
               console.log("error", errorCode, errorMessage)
             }
             
-            Alert.alert(errorMessage)
+            Alert.alert("Ocurrio un error en el servidor")
             // ..
         });
     }
@@ -146,24 +153,7 @@ const Login:React.FC<LoginProps> = ({navigation}) => {
             </TouchableOpacity>
         </View>
         <Text onPress={()=>navigation.navigate("Register")}>    Don't have an account?</Text>
-        <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("Booking")}>
-                <Text style={styles.btnText}>Booking</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereAreYou")}>
-                <Text style={styles.btnText}>Where</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("SelectPassengers")}>
-                <Text style={styles.btnText}>Passagers</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("SelectDate")}>
-                <Text style={styles.btnText}>Select Date</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.btnStyle} onPress={()=>navigation.navigate("WhereWillYouBeFlyingTo")}>
-                <Text style={styles.btnText}>WhereWillYouBeFlyingTo</Text>
-            </TouchableOpacity>
+        
     </View>
     </SafeAreaView>
     

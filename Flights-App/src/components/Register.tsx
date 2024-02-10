@@ -12,10 +12,6 @@ import { GoogleAuthProvider,signInWithCredential } from 'firebase/auth';
 import { auth } from '../../firebaseConfig.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-
-
 type RegisterNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>
 type RegisterProps = {
     navigation: RegisterNavigationProp;
@@ -38,6 +34,7 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 console.log("User created!")
                 const user = userCredential.user;
                 console.log("user", user)
+                navigation.navigate('Login');
                 // ...
             })
             .catch((error) => {
@@ -89,16 +86,16 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
 ////////////////////////////////////////////
 
     const handleSubmit = () => {
-        console.log("Datos registrados:", user, password, email);
-        if (user.trim() === '' || password.trim() === '' || email === '') {
+        if (!isCheckedAT) {
+            Alert.alert("Debes aceptar los términos y condiciones para registrarte.")
+        } else if (user.trim() === '' || password.trim() === '' || email === '') {
             Alert.alert("Todos los campos son obligatorios");
             setBorderColor('red')
         } else {
-            // navigation.navigate('Home')
             handleUserFirebase()
+            console.log("Datos registrados:", user, password, email);
             Alert.alert("Datos correctos")
         }
-
     }
 
 
@@ -158,9 +155,6 @@ const Register: React.FC<RegisterProps> = ({ navigation }) => {
                 <Text onPress={() => signOut}>
                     log Out
                 </Text>
-
-
-
             </View>
         </SafeAreaView>
     );

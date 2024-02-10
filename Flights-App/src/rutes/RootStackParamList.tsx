@@ -13,16 +13,22 @@ export type SelectPassengersNavigationProps = StackNavigationProp<RootStackParam
 export type WhereAreYouProp = RouteProp<RootStackParamList,"WhereAreYou">
 export type WhereAreYouNavigationProp = StackNavigationProp<RootStackParamList,"WhereAreYou">
 
+export type RequestReceivedProps = RouteProp<RootStackParamList,"RequestReceived">
+export type RequestReceivedNavigationProp = StackNavigationProp<RootStackParamList,"RequestReceived">
+
+export type MyFlightsProps = RouteProp<RootStackParamList,"MyFlights">
+export type MyFlightsNavigation = StackNavigationProp<RootStackParamList,"MyFlights">
+
 export type RootStackParamList = {
-  Home: {userID:Number};
   Register: undefined;
   Login:undefined;
-  Booking:{from?:String,to?:String};
-  SelectDate:{from?:String,to?:String};
+  Booking:{from?:String,to?:String,date?:String,passangers?:Number, fromIso3?:String, toIso3?:String};
+  SelectDate:{from?:String,to?:String, fromIso3?:String, toIso3?:String};
   WhereAreYou:undefined;
-  SelectPassengers:{from?:String,to?:String,date?:String};
-  WhereWillYouBeFlyingTo:{from?:String};
-
+  SelectPassengers:{from?:String,to?:String,date?:String,fromIso3?:String, toIso3?:String};
+  WhereWillYouBeFlyingTo:{from?:String,fromIso3?:String};
+  RequestReceived:{from?:String,to?:String,date?:String,passangers?:Number,fromIso3?:String, toIso3?:String};
+  MyFlights:undefined;
 }
 
 export type RootStackRouteProps<T extends keyof RootStackParamList> = {
